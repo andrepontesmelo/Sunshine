@@ -32,6 +32,8 @@ import java.util.List;
 
 public class ForecastFragment extends Fragment {
 
+    private ArrayAdapter<String> arrayAdapter;
+
     public ForecastFragment() {
     }
 
@@ -55,7 +57,6 @@ public class ForecastFragment extends Fragment {
             FetchWeatherTask task = new FetchWeatherTask();
             task.execute();
 
-
             return true;
         }
 
@@ -77,7 +78,7 @@ public class ForecastFragment extends Fragment {
             lstWeather.add("Tomorrow - min 24 - max 25");
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        arrayAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview,
@@ -149,6 +150,24 @@ public class ForecastFragment extends Fragment {
             }
 
             return new ArrayList<String>();
+        }
+
+        @Override
+        protected void onPostExecute(List<String> lstWeather) {
+
+            arrayAdapter = new ArrayAdapter<String>(
+                    getActivity(),
+                    R.layout.list_item_forecast,
+                    R.id.list_item_forecast_textview,
+                    lstWeather);
+
+
+            ListView lstView = (ListView) getActivity().findViewById(R.id.listview_forecast);
+
+            lstView.setAdapter(arrayAdapter);
+
+
+            super.onPostExecute(lstWeather);
         }
 
         private String getReadableDateString(long time){

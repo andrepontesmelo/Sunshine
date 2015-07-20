@@ -16,7 +16,6 @@ public class WeatherDataParser {
         JSONObject day = days.getJSONObject(dayIndex);
 
         return day.getJSONObject("temp").getDouble("max");
-
     }
 
 }
