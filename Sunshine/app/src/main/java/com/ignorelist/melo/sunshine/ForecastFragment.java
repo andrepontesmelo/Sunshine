@@ -73,7 +73,7 @@ public class ForecastFragment extends Fragment {
             lstWeather.add("Tomorrow - min 24 - max 25");
         }
 
-        arrayAdapter = new ArrayAdapter<String>(
+        arrayAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview,
@@ -105,7 +105,7 @@ public class ForecastFragment extends Fragment {
                 urlConnection.connect();
 
                 InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                 if (inputStream == null)
                     return null;
 
@@ -113,14 +113,14 @@ public class ForecastFragment extends Fragment {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
+                    buffer.append(line);
+                    buffer.append("\n");
                 }
 
                 if (buffer.length() == 0)
                     return null;
 
                 forecastJsonStr = buffer.toString();
-                Log.v(LOG_TAG, forecastJsonStr);
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
@@ -151,17 +151,8 @@ public class ForecastFragment extends Fragment {
         @Override
         protected void onPostExecute(List<String> lstWeather) {
 
-            arrayAdapter = new ArrayAdapter<String>(
-                    getActivity(),
-                    R.layout.list_item_forecast,
-                    R.id.list_item_forecast_textview,
-                    lstWeather);
-
-
-            ListView lstView = (ListView) getActivity().findViewById(R.id.listview_forecast);
-
-            lstView.setAdapter(arrayAdapter);
-
+            arrayAdapter.clear();
+            arrayAdapter.addAll(lstWeather);
 
             super.onPostExecute(lstWeather);
         }
