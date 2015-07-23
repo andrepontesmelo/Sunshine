@@ -1,5 +1,6 @@
 package com.ignorelist.melo.sunshine;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -88,7 +88,10 @@ public class ForecastFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getActivity(), arrayAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                Intent details = new Intent(getActivity(), WeatherDetailActivity.class);
+                details.putExtra(Intent.EXTRA_TEXT, arrayAdapter.getItem(position));
+
+                startActivity(details);
             }
         });
 
