@@ -1,8 +1,10 @@
 package com.ignorelist.melo.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,8 +51,18 @@ public class ForecastFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        UpdateWeather();
+    }
+
+    private void UpdateWeather() {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        String locationCode =  preferences.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+
         FetchWeatherTask task = new FetchWeatherTask();
-        task.execute();
+        task.execute(locationCode);
     }
 
     @Override
@@ -72,6 +84,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -101,14 +114,15 @@ public class ForecastFragment extends Fragment {
         return view;
     }
 
-    public class FetchWeatherTask extends AsyncTask<Void, Void, List<String>>
+    public class FetchWeatherTask extends AsyncTask<String, Void, List<String>>
     {
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        public ArrayList<String> doInBackground(Void... params)  {
+        public ArrayList<String> doInBackground(String... params)  {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
+
 
             String forecastJsonStr = null;
 

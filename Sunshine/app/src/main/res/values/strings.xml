@@ -5,7 +5,7 @@
     <string name="action_refresh" translatable="false">Refresh..</string>
     <string name="title_activity_weather_detail">WeatherDetailActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="pref_location_label">City Name</string>
+    <string name="pref_location_label">City Code</string>
     <string name="pref_location_key" translatable="false">location</string>
-    <string name="pref_location_default" translatable="false">Belo Horizonte</string>
+    <string name="pref_location_default" translatable="false">3470127</string>
 </resources>
