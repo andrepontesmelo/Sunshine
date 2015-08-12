@@ -46,6 +46,14 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        FetchWeatherTask task = new FetchWeatherTask();
+        task.execute();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -69,11 +77,6 @@ public class ForecastFragment extends Fragment {
 
 
         ArrayList<String> lstWeather = new ArrayList<>();
-
-        for (int x = 0; x < 1; x ++) {
-            lstWeather.add("Today - min 21 - max 24");
-            lstWeather.add("Tomorrow - min 24 - max 25");
-        }
 
         arrayAdapter = new ArrayAdapter<>(
                 getActivity(),
