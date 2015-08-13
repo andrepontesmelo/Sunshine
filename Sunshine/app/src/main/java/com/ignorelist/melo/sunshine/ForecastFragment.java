@@ -51,10 +51,10 @@ public class ForecastFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        UpdateWeather();
+        updateWeather();
     }
 
-    private void UpdateWeather() {
+    private void updateWeather() {
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -71,8 +71,7 @@ public class ForecastFragment extends Fragment {
 
         if (id == R.id.action_refresh) {
 
-            FetchWeatherTask task = new FetchWeatherTask();
-            task.execute();
+            updateWeather();
 
             return true;
         }
